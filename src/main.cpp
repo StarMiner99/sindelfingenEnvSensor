@@ -254,23 +254,5 @@ void setup() {
 }
 
 void loop() {
-    /*
-    updateSensorValues();
-    Serial.println("-------------------------------------------------");
-
-    Serial.println(owTemperature);
-
-
-    Serial.println(moisture);
-    Serial.println();
-
-
-    Serial.println(bmeTemperature);
-    Serial.println(bmeHumidity);
-    Serial.println(bmePressure);
-     */
     os_runloop_once();
-
-
-    //delay(1000);
 }
