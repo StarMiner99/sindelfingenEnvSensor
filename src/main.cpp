@@ -64,6 +64,7 @@ void do_send(osjob_t* j){
     if (LMIC.opmode & OP_TXRXPEND) {
         Serial.println(F("OP_TXRXPEND, not sending"));
     } else {
+        Serial.println("Preparing Send");
         // update values from sensors
         updateSensorValues();
 
@@ -241,6 +242,9 @@ void onEvent (ev_t ev) {
 void setup() {
     Serial.begin(115200);
     while(!Serial);
+    delay(5000); // wait for serial monitors to register device
+
+    Serial.println("Starting Up");
 
     dTemp.begin();
     sensor.begin();
@@ -250,7 +254,7 @@ void setup() {
 
     LMIC_reset();
 
-    updateSensorValues();
+    do_send(&sendjob);
 }
 
 void loop() {
