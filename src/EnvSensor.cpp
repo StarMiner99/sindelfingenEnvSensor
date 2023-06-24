@@ -4,20 +4,17 @@
 
 #include "EnvSensor.h"
 
-EnvSensor::EnvSensor(int owTempPin, int moistureSensorPin, uint8_t bmeAddr) {
-    OneWire oneWireTemp(owTempPin);
+EnvSensor::EnvSensor() {
+    OneWire oneWireTemp(OW_TEMP_PIN);
     EnvSensor::tempSensor = new DallasTemperature(&oneWireTemp);
 
     EnvSensor::bme = new Adafruit_BME280();
-    EnvSensor::bmeAddr = bmeAddr;
-
-    EnvSensor::moisturePin = moistureSensorPin;
 }
 
 bool EnvSensor::begin() {
     bool success;
     tempSensor->begin();
-    success = bme->begin(bmeAddr);
+    success = bme->begin(BME_ADDR);
 
     return success;
 }
@@ -28,7 +25,7 @@ float EnvSensor::getOWTemperature() {
 }
 
 int EnvSensor::getMoisture() {
-    return analogRead(moisturePin);
+    return analogRead(MOISTURE_SENSOR_PIN);
 }
 
 float EnvSensor::getTemperature() {

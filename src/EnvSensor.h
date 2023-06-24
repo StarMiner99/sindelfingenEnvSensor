@@ -10,16 +10,15 @@
 #include "Adafruit_BME280.h"
 #include "OneWire.h"
 #include <DallasTemperature.h>
+#include "Config.h"
 
 class EnvSensor {
 private:
     Adafruit_BME280* bme;
     DallasTemperature* tempSensor;
 
-    uint8_t bmeAddr;
-    int moisturePin;
 public:
-    EnvSensor(int owTempPin, int moistureSensorPin, uint8_t bmeAddr);
+    EnvSensor();
     bool begin();
 
     float getOWTemperature();
