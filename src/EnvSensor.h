@@ -7,21 +7,28 @@
 
 
 #include <cstdint>
-#include "Adafruit_BME280.h"
-#include "OneWire.h"
+
+#include <Arduino.h>
+
+#include <OneWire.h>
 #include <DallasTemperature.h>
+
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BME280.h>
+
 #include "Config.h"
 
 class EnvSensor {
 private:
     Adafruit_BME280* bme;
-    DallasTemperature* tempSensor;
+    //DallasTemperature* tempSensor;
 
 public:
     EnvSensor();
     bool begin();
 
-    float getOWTemperature();
+   // float getOWTemperature();
 
     int getMoisture();
 
