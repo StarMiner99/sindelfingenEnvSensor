@@ -1,9 +1,18 @@
 #include <Arduino.h>
 #include "EnvSensor.h"
 
+#define DISABLE_PING
+#define DISABLE_BEACONS
+
 #include <lmic.h>
 #include <hal/hal.h>
 #include <SPI.h>
+
+#define BLINKING 1
+#define LED_ON 2
+#define LED_OFF 0
+
+int led_state = BLINKING;
 
 EnvSensor sensor;
 
@@ -21,6 +30,7 @@ static const u1_t PROGMEM APPKEY[16] = APP_KEY;
 void os_getDevKey (u1_t* buf) {  memcpy_P(buf, APPKEY, 16);}
 
 static uint8_t payload[11];
+//static uint8_t mydata[] = "Hello, world!";
 static osjob_t sendjob;
 
 // send interval in seconds
@@ -28,10 +38,10 @@ const unsigned TX_INTERVAL = 60;
 
 // Pin mapping
 const lmic_pinmap lmic_pins = {
-        .nss = 16,
+        .nss = PIN_RFM_CS,
         .rxtx = LMIC_UNUSED_PIN,
-        .rst = 17,
-        .dio = {21, 22, 23},
+        .rst = PIN_RFM_RST,
+        .dio = {PIN_RFM_DIO0, PIN_RFM_DIO1, PIN_RFM_DIO2},
 };
 
 void printHex2(unsigned v) {
@@ -64,6 +74,7 @@ void do_send(osjob_t* j){
     if (LMIC.opmode & OP_TXRXPEND) {
         Serial.println(F("OP_TXRXPEND, not sending"));
     } else {
+
         Serial.println("Preparing Send");
         // update values from sensors
         updateSensorValues();
@@ -71,10 +82,10 @@ void do_send(osjob_t* j){
         // load Data into array
         // adjust for the f2sflt16 range (-1 to 1)
         float fOwTemp = owTemperature / 200; // temp will not go under or above -200 / 200 °C (range of sensor -55 to +125 °C)
-        float fMoisture = owTemperature / 4096; // adc resolution of 12 bits
+        float fMoisture = (float) moisture / 4096; // adc resolution of 12 bits
         float fBmeTemperature = bmeTemperature / 200; // see above (sensor range: -40 to +85 °C)
         float fBmePressure = bmePressure / 110000; // max pressure measured is 1100 hPa or 110000 Pa
-        float fBmeHumidity = bmePressure / 100; // max humidity is 100%
+        float fBmeHumidity = bmeHumidity / 100; // max humidity is 100%
 
         uint16_t payloadOwTemp = LMIC_f2sflt16(fOwTemp);
         uint16_t payloadMoisture = LMIC_f2sflt16(fMoisture);
@@ -112,6 +123,11 @@ void do_send(osjob_t* j){
         // Prepare upstream data transmission at the next possible time.
         LMIC_setTxData2(1, payload, sizeof(payload)-1, 0);
         Serial.println(F("Packet queued"));
+
+
+        //LMIC_setTxData2(1, mydata, sizeof(mydata)-1, 0);
+        //Serial.println(F("Packet queued"));
+
     }
     // Next TX is scheduled after TX_COMPLETE event.
 }
@@ -134,6 +150,10 @@ void onEvent (ev_t ev) {
             break;
         case EV_JOINING:
             Serial.println(F("EV_JOINING"));
+            Serial.print("RSSI: ");
+            Serial.println(LMIC.rssi);
+            Serial.print("SNR: ");
+            Serial.println(LMIC.snr);
             break;
         case EV_JOINED:
             Serial.println(F("EV_JOINED"));
@@ -166,6 +186,7 @@ void onEvent (ev_t ev) {
             // during join, but because slow data rates change max TX
             // size, we don't use it in this example.
             LMIC_setLinkCheckMode(0);
+            led_state = LED_ON;
             break;
             /*
             || This event is defined but not used in the code. No
@@ -192,6 +213,7 @@ void onEvent (ev_t ev) {
             }
             // Schedule next transmission
             os_setTimedCallback(&sendjob, os_getTime()+sec2osticks(TX_INTERVAL), do_send);
+
             break;
         case EV_LOST_TSYNC:
             Serial.println(F("EV_LOST_TSYNC"));
@@ -219,6 +241,10 @@ void onEvent (ev_t ev) {
             */
         case EV_TXSTART:
             Serial.println(F("EV_TXSTART"));
+            Serial.print("RSSI: ");
+            Serial.println(LMIC.rssi);
+            Serial.print("SNR: ");
+            Serial.println(LMIC.snr);
             break;
         case EV_TXCANCELED:
             Serial.println(F("EV_TXCANCELED"));
@@ -228,6 +254,12 @@ void onEvent (ev_t ev) {
             break;
         case EV_JOIN_TXCOMPLETE:
             Serial.println(F("EV_JOIN_TXCOMPLETE: no JoinAccept"));
+            Serial.print("RSSI: ");
+            Serial.println(LMIC.rssi);
+            Serial.print("SNR: ");
+            Serial.println(LMIC.snr);
+
+            led_state = BLINKING;
             break;
 
         default:
@@ -238,10 +270,10 @@ void onEvent (ev_t ev) {
 }
 
 
-
+ulong lastBlink;
 void setup() {
     Serial.begin(115200);
-    while(!Serial);
+    //while(!Serial);
     delay(5000); // wait for serial monitors to register device
 
     Serial.println("Starting Up");
@@ -249,14 +281,39 @@ void setup() {
     dTemp.begin();
     sensor.begin();
 
+    pinMode(LED_BUILTIN, OUTPUT);
+
     //LMIC init
     os_init();
 
     LMIC_reset();
+    LMIC_setDrTxpow(SF12, 27);
 
     do_send(&sendjob);
+
+    lastBlink = millis();
 }
 
+
+bool led_current = false;
 void loop() {
+    switch (led_state) {
+        case BLINKING:
+            if (millis() - lastBlink >= 200) {
+                digitalWrite(LED_BUILTIN, !led_current);
+                led_current = !led_current;
+                lastBlink = millis();
+            }
+            break;
+        case LED_OFF:
+            digitalWrite(LED_BUILTIN, false);
+            break;
+        case LED_ON:
+            digitalWrite(LED_BUILTIN, true);
+            break;
+        default:
+            break;
+
+    }
     os_runloop_once();
 }
