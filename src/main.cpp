@@ -287,7 +287,7 @@ void setup() {
     os_init();
 
     LMIC_reset();
-    LMIC_setDrTxpow(SF12, 27);
+    LMIC_setDrTxpow(SF12, 14);
 
     do_send(&sendjob);
 
