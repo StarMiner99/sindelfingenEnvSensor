@@ -1,4 +1,7 @@
 #include <Arduino.h>
+#include <pico/stdlib.h>
+
+
 #include "EnvSensor.h"
 
 #define DISABLE_PING
@@ -34,7 +37,11 @@ static uint8_t payload[11];
 static osjob_t sendjob;
 
 // send interval in seconds
+#ifdef DEBUG_MODE
 const unsigned TX_INTERVAL = 60;
+#else
+const unsigned TX_INTERVAL = SEND_OFFSET;
+#endif
 
 // Pin mapping
 const lmic_pinmap lmic_pins = {
@@ -70,6 +77,8 @@ void updateSensorValues() {
 
 
 void do_send(osjob_t* j){
+    //set_sys_clock_48mhz(); // set clock to normal freq
+
     // Check if there is not a current TX/RX job running
     if (LMIC.opmode & OP_TXRXPEND) {
         Serial.println(F("OP_TXRXPEND, not sending"));
@@ -123,10 +132,6 @@ void do_send(osjob_t* j){
         // Prepare upstream data transmission at the next possible time.
         LMIC_setTxData2(1, payload, sizeof(payload)-1, 0);
         Serial.println(F("Packet queued"));
-
-
-        //LMIC_setTxData2(1, mydata, sizeof(mydata)-1, 0);
-        //Serial.println(F("Packet queued"));
 
     }
     // Next TX is scheduled after TX_COMPLETE event.
@@ -201,6 +206,8 @@ void onEvent (ev_t ev) {
             }
             // Schedule next transmission
             os_setTimedCallback(&sendjob, os_getTime()+sec2osticks(TX_INTERVAL), do_send);
+
+            //set_sys_clock_pll(750, 7,7); // underclock
             break;
         case EV_LOST_TSYNC:
             Serial.println(F("EV_LOST_TSYNC"));
@@ -241,6 +248,7 @@ void onEvent (ev_t ev) {
 
 ulong lastBlink;
 void setup() {
+
     Serial.begin(115200);
     //while(!Serial);
     delay(5000); // wait for serial monitors to register device
@@ -262,6 +270,9 @@ void setup() {
     do_send(&sendjob);
 
     lastBlink = millis();
+
+    // lowest frequency possible (~15.3MHz)
+    //set_sys_clock_pll(750, 7,7); // underclock rp2040 to save power (sleep mode does not work currently)
 }
 
 

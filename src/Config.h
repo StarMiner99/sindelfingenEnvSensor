@@ -9,6 +9,8 @@
 // define if debuging (uses more energy due to led)
 #define DEBUG_MODE
 
+#define SEND_OFFSET 3600 // time in seconds how often to send data (in debug mode this is 60)
+
 #define BME_ADDR 0x76
 #define MOISTURE_SENSOR_PIN A0
 #define OW_TEMP_PIN D5
