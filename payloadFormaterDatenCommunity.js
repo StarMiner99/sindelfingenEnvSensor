@@ -12,7 +12,7 @@ var decPayload = data.uplink_message.decoded_payload;
 
 var deviceName = data.end_device_ids.device_id;
 var deviceType = data.end_device_ids.application_ids.application_id;
-
+var groupName = "bodenfeuchte-gds1";
 // use assetName and assetType instead of deviceName and deviceType
 // to automatically create assets instead of devices.
 // var assetName = 'Asset A';
@@ -26,13 +26,14 @@ var result = {
 // assetName: assetName,
 // assetType: assetType,
 // customerName: customerName,
+    groupName: groupName,
+
    telemetry: {
        owTemp: decPayload['owTemp'],
        moisture: decPayload['moist'],
        bmeTemp: decPayload['bmeTemp'],
        bmePressure: decPayload['bmePress'],
        bmeHumidity: decPayload['bmeHumid'],
-       humidity: 80,
        rawData: rawDataStr
    }
 };
