@@ -150,10 +150,6 @@ void onEvent (ev_t ev) {
             break;
         case EV_JOINING:
             Serial.println(F("EV_JOINING"));
-            Serial.print("RSSI: ");
-            Serial.println(LMIC.rssi);
-            Serial.print("SNR: ");
-            Serial.println(LMIC.snr);
             break;
         case EV_JOINED:
             Serial.println(F("EV_JOINED"));
@@ -188,14 +184,6 @@ void onEvent (ev_t ev) {
             LMIC_setLinkCheckMode(0);
             led_state = LED_ON;
             break;
-            /*
-            || This event is defined but not used in the code. No
-            || point in wasting codespace on it.
-            ||
-            || case EV_RFU1:
-            ||     Serial.println(F("EV_RFU1"));
-            ||     break;
-            */
         case EV_JOIN_FAILED:
             Serial.println(F("EV_JOIN_FAILED"));
             break;
@@ -213,7 +201,6 @@ void onEvent (ev_t ev) {
             }
             // Schedule next transmission
             os_setTimedCallback(&sendjob, os_getTime()+sec2osticks(TX_INTERVAL), do_send);
-
             break;
         case EV_LOST_TSYNC:
             Serial.println(F("EV_LOST_TSYNC"));
@@ -222,7 +209,6 @@ void onEvent (ev_t ev) {
             Serial.println(F("EV_RESET"));
             break;
         case EV_RXCOMPLETE:
-            // data received in ping slot
             Serial.println(F("EV_RXCOMPLETE"));
             break;
         case EV_LINK_DEAD:
@@ -231,20 +217,8 @@ void onEvent (ev_t ev) {
         case EV_LINK_ALIVE:
             Serial.println(F("EV_LINK_ALIVE"));
             break;
-            /*
-            || This event is defined but not used in the code. No
-            || point in wasting codespace on it.
-            ||
-            || case EV_SCAN_FOUND:
-            ||    Serial.println(F("EV_SCAN_FOUND"));
-            ||    break;
-            */
         case EV_TXSTART:
             Serial.println(F("EV_TXSTART"));
-            Serial.print("RSSI: ");
-            Serial.println(LMIC.rssi);
-            Serial.print("SNR: ");
-            Serial.println(LMIC.snr);
             break;
         case EV_TXCANCELED:
             Serial.println(F("EV_TXCANCELED"));
@@ -254,11 +228,6 @@ void onEvent (ev_t ev) {
             break;
         case EV_JOIN_TXCOMPLETE:
             Serial.println(F("EV_JOIN_TXCOMPLETE: no JoinAccept"));
-            Serial.print("RSSI: ");
-            Serial.println(LMIC.rssi);
-            Serial.print("SNR: ");
-            Serial.println(LMIC.snr);
-
             led_state = BLINKING;
             break;
 
@@ -282,6 +251,7 @@ void setup() {
     sensor.begin();
 
     pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, false);
 
     //LMIC init
     os_init();
@@ -297,6 +267,7 @@ void setup() {
 
 bool led_current = false;
 void loop() {
+#ifdef DEBUG_MODE
     switch (led_state) {
         case BLINKING:
             if (millis() - lastBlink >= 200) {
@@ -315,5 +286,6 @@ void loop() {
             break;
 
     }
+#endif
     os_runloop_once();
 }
