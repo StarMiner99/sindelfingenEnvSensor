@@ -1,3 +1,6 @@
 [submodule "customPlatformCore/platform-raspberrypi"]
 	path = customPlatformCore/platform-raspberrypi
 	url = git@github.com:StarMiner99/platform-raspberrypi.git
+[submodule "customPlatformCore/arduino-pico"]
+	path = customPlatformCore/arduino-pico
+	url = git@github.com:StarMiner99/arduino-pico.git
