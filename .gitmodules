@@ -1,0 +1,3 @@
+[submodule "customPlatformCore/platform-raspberrypi"]
+	path = customPlatformCore/platform-raspberrypi
+	url = git@github.com:StarMiner99/platform-raspberrypi.git
