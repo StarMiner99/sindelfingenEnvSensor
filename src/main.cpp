@@ -1,6 +1,7 @@
 #include <Arduino.h>
+#include <hardware/rtc.h>
 #include <pico/stdlib.h>
-
+#include <pico/sleep.h>
 
 #include "EnvSensor.h"
 
@@ -10,6 +11,7 @@
 #include <lmic.h>
 #include <hal/hal.h>
 #include <SPI.h>
+
 
 #define BLINKING 1
 #define LED_ON 2
@@ -245,6 +247,12 @@ void onEvent (ev_t ev) {
     }
 }
 
+bool awake = true;
+
+static void sleepFinished() {
+    awake = true;
+}
+
 
 ulong lastBlink;
 void setup() {
@@ -271,8 +279,38 @@ void setup() {
 
     lastBlink = millis();
 
-    // lowest frequency possible (~15.3MHz)
-    //set_sys_clock_pll(750, 7,7); // underclock rp2040 to save power (sleep mode does not work currently)
+    datetime_t t = {
+            .year = 2023,
+            .month = 06,
+            .day = 29,
+            .dotw = 4,
+            .hour = 18,
+            .min = 10,
+            .sec = 0
+    };
+
+    datetime_t t_alarm = {
+            .year = 2023,
+            .month = 06,
+            .day = 29,
+            .dotw = 4,
+            .hour = 18,
+            .min = 10,
+            .sec = 20
+    };
+
+
+    rtc_init();
+    rtc_set_datetime(&t);
+
+    Serial.println("before sleep start");
+
+    awake = false;
+
+
+    sleep_goto_sleep_until(&t_alarm, &sleepFinished);
+
+    Serial.println("after sleep start");
 }
 
 
@@ -298,5 +336,12 @@ void loop() {
 
     }
 #endif
+
+    if (awake) {
+        Serial.println("we are running");
+    } else{
+        Serial.println("this should not be visible");
+    }
+
     os_runloop_once();
 }
