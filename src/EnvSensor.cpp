@@ -9,12 +9,13 @@ EnvSensor::EnvSensor() {
    // EnvSensor::tempSensor = new DallasTemperature(&oneWireTemp);
 
     EnvSensor::bme = new Adafruit_BME280();
+    i2c = new MbedI2C(I2C_SDA_PIN,I2C_SCL_PIN);
 }
 
 bool EnvSensor::begin() {
     bool success;
     //tempSensor->begin();
-    success = bme->begin(BME_ADDR);
+    success = bme->begin(BME_ADDR, i2c);
 
     return success;
 }

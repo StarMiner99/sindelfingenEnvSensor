@@ -20,6 +20,7 @@
 class EnvSensor {
 private:
     Adafruit_BME280* bme;
+    MbedI2C *i2c;
     //DallasTemperature* tempSensor;
 
 public:

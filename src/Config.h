@@ -11,9 +11,14 @@
 
 #define SEND_OFFSET 3600 // time in seconds how often to send data (in debug mode this is 60)
 
+#define I2C_SDA_PIN 2
+#define I2C_SCL_PIN 3
+
 #define BME_ADDR 0x76
-#define MOISTURE_SENSOR_PIN A0
-#define OW_TEMP_PIN D5
+#define MOISTURE_SENSOR_PIN 38
+#define OW_TEMP_PIN 5
+
+
 
 // the following values should not be published
 // and therefore placed in a seperate file that is not version Controlled
