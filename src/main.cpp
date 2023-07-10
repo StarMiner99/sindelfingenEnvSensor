@@ -2,6 +2,10 @@
 #include "sleep.h"
 #include "hardware/rtc.h"
 
+#include "OneWireNg_CurrentPlatform.h"
+#include "drivers/DSTherm.h"
+#include "utils/Placeholder.h"
+
 #include "EnvSensor.h"
 #include "SPI.h"
 
@@ -13,8 +17,8 @@ MbedSPI spi(8,15,14);
 
 EnvSensor sensor;
 
-OneWire tempSensorOW(OW_TEMP_PIN);
-DallasTemperature dTemp(&tempSensorOW);
+Placeholder<OneWireNg_CurrentPlatform> ow;
+
 
 
 
@@ -56,8 +60,8 @@ const lmic_pinmap lmic_pins = {
 void printHex2(unsigned v) {
     v &= 0xff;
     if (v < 16)
-        Serial1.print('0');
-    Serial1.print(v, HEX);
+        Serial.print('0');
+    Serial.print(v, HEX);
 }
 
 float owTemperature;
@@ -81,6 +85,16 @@ void updateSensorValues() {
     //dTemp.requestTemperatures();
     //owTemperature = dTemp.getTempCByIndex(0);
 
+    DSTherm owTemp(ow);
+    owTemp.convertTempAll(DSTherm::MAX_CONV_TIME, false);
+    static Placeholder<DSTherm::Scratchpad> scrpd;
+    OneWireNg::ErrorCode ec = owTemp.readScratchpadSingle(scrpd);
+    if (ec == OneWireNg::EC_SUCCESS) {
+        owTemperature =  (float)(scrpd->getTemp()) / 1000;
+    } else if (ec == OneWireNg::EC_CRC_ERROR)
+        owTemperature = -500;
+
+
     moisture = sensor.getMoisture();
 
     bmeTemperature = sensor.getTemperature();
@@ -94,10 +108,10 @@ void do_send(osjob_t *j) {
 
     // Check if there is not a current TX/RX job running
     if (LMIC.opmode & OP_TXRXPEND) {
-        Serial1.println(F("OP_TXRXPEND, not sending"));
+        Serial.println(F("OP_TXRXPEND, not sending"));
     } else {
 
-        Serial1.println("Preparing Send");
+        Serial.println("Preparing Send");
         // update values from sensors
 
         updateSensorValues();
@@ -147,7 +161,7 @@ void do_send(osjob_t *j) {
 
         // Prepare upstream data transmission at the next possible time.
         LMIC_setTxData2(1, payload, sizeof(payload) - 1, 0);
-        Serial1.println(F("Packet queued"));
+        Serial.println(F("Packet queued"));
 
     }
     // Next TX is scheduled after TX_COMPLETE event.
@@ -164,80 +178,80 @@ void retryJoin(osjob_t *j) {
 
 void goSleep() {
 
-    Serial1.println("Going to sleep");
-    Serial1.flush();
+    Serial.println("Going to sleep");
+    Serial.flush();
     sleep_goto_sleep_for(TX_INTERVAL, &sleepFinished, true);
 
 }
 
 
 void onEvent(ev_t ev) {
-    Serial1.print(os_getTime());
-    Serial1.print(": ");
+    Serial.print(os_getTime());
+    Serial.print(": ");
     switch (ev) {
         case EV_SCAN_TIMEOUT:
-            Serial1.println(F("EV_SCAN_TIMEOUT"));
+            Serial.println(F("EV_SCAN_TIMEOUT"));
             break;
         case EV_BEACON_FOUND:
-            Serial1.println(F("EV_BEACON_FOUND"));
+            Serial.println(F("EV_BEACON_FOUND"));
             break;
         case EV_BEACON_MISSED:
-            Serial1.println(F("EV_BEACON_MISSED"));
+            Serial.println(F("EV_BEACON_MISSED"));
             break;
         case EV_BEACON_TRACKED:
-            Serial1.println(F("EV_BEACON_TRACKED"));
+            Serial.println(F("EV_BEACON_TRACKED"));
             break;
         case EV_JOINING:
-            Serial1.println(F("EV_JOINING"));
+            Serial.println(F("EV_JOINING"));
             break;
         case EV_JOINED:
-            Serial1.println(F("EV_JOINED"));
+            Serial.println(F("EV_JOINED"));
             {
                 u4_t netid = 0;
                 devaddr_t devaddr = 0;
                 u1_t nwkKey[16];
                 u1_t artKey[16];
                 LMIC_getSessionKeys(&netid, &devaddr, nwkKey, artKey);
-                Serial1.print("netid: ");
-                Serial1.println(netid, DEC);
-                Serial1.print("devaddr: ");
-                Serial1.println(devaddr, HEX);
-                Serial1.print("AppSKey: ");
+                Serial.print("netid: ");
+                Serial.println(netid, DEC);
+                Serial.print("devaddr: ");
+                Serial.println(devaddr, HEX);
+                Serial.print("AppSKey: ");
                 for (size_t i = 0; i < sizeof(artKey); ++i) {
                     if (i != 0)
-                        Serial1.print("-");
+                        Serial.print("-");
                     printHex2(artKey[i]);
                 }
-                Serial1.println("");
-                Serial1.print("NwkSKey: ");
+                Serial.println("");
+                Serial.print("NwkSKey: ");
                 for (size_t i = 0; i < sizeof(nwkKey); ++i) {
                     if (i != 0)
-                        Serial1.print("-");
+                        Serial.print("-");
                     printHex2(nwkKey[i]);
                 }
-                Serial1.println();
+                Serial.println();
             }
             // Disable link check validation (automatically enabled)
             // during join, but because slow data rates change max TX
             // size, we don't use it in this example.
             LMIC_setLinkCheckMode(0);
-            Serial1.println("Connected");
+            Serial.println("Connected");
             do_send(&sendjob);
             break;
         case EV_JOIN_FAILED:
-            Serial1.println(F("EV_JOIN_FAILED"));
+            Serial.println(F("EV_JOIN_FAILED"));
 
         case EV_REJOIN_FAILED:
-            Serial1.println(F("EV_REJOIN_FAILED"));
+            Serial.println(F("EV_REJOIN_FAILED"));
             break;
         case EV_TXCOMPLETE:
-            Serial1.println(F("EV_TXCOMPLETE (includes waiting for RX windows)"));
+            Serial.println(F("EV_TXCOMPLETE (includes waiting for RX windows)"));
             if (LMIC.txrxFlags & TXRX_ACK)
-                Serial1.println(F("Received ack"));
+                Serial.println(F("Received ack"));
             if (LMIC.dataLen) {
-                Serial1.print(F("Received "));
-                Serial1.print(LMIC.dataLen);
-                Serial1.println(F(" bytes of payload"));
+                Serial.print(F("Received "));
+                Serial.print(LMIC.dataLen);
+                Serial.println(F(" bytes of payload"));
             }
             // Schedule next transmission
             //os_setTimedCallback(&goSleep, os_getTime() + sec2osticks(5), goSleep2);
@@ -245,38 +259,38 @@ void onEvent(ev_t ev) {
 
             break;
         case EV_LOST_TSYNC:
-            Serial1.println(F("EV_LOST_TSYNC"));
+            Serial.println(F("EV_LOST_TSYNC"));
             break;
         case EV_RESET:
-            Serial1.println(F("EV_RESET"));
+            Serial.println(F("EV_RESET"));
             break;
         case EV_RXCOMPLETE:
-            Serial1.println(F("EV_RXCOMPLETE"));
+            Serial.println(F("EV_RXCOMPLETE"));
             break;
         case EV_LINK_DEAD:
-            Serial1.println(F("EV_LINK_DEAD"));
+            Serial.println(F("EV_LINK_DEAD"));
             break;
         case EV_LINK_ALIVE:
-            Serial1.println(F("EV_LINK_ALIVE"));
+            Serial.println(F("EV_LINK_ALIVE"));
             break;
         case EV_TXSTART:
-            Serial1.println(F("EV_TXSTART"));
+            Serial.println(F("EV_TXSTART"));
             break;
         case EV_TXCANCELED:
-            Serial1.println(F("EV_TXCANCELED"));
+            Serial.println(F("EV_TXCANCELED"));
             break;
         case EV_RXSTART:
             /* do not print anything -- it wrecks timing */
             break;
         case EV_JOIN_TXCOMPLETE:
-            Serial1.println(F("EV_JOIN_TXCOMPLETE: no JoinAccept"));
-            Serial1.println("Versuche neu zu verbinden in so 5 Sekunden oder so");
+            Serial.println(F("EV_JOIN_TXCOMPLETE: no JoinAccept"));
+            Serial.println("No Connection... trying to reconnect in 5 Seconds");
             os_setTimedCallback(&retryJoinCallback, os_getTime() + sec2osticks(5), retryJoin);
             break;
 
         default:
-            Serial1.print(F("Unknown event: "));
-            Serial1.println((unsigned) ev);
+            Serial.print(F("Unknown event: "));
+            Serial.println((unsigned) ev);
             break;
     }
 }
@@ -286,11 +300,17 @@ void onEvent(ev_t ev) {
 
 void setup() {
 
-    Serial1.begin(9600);
+    Serial.begin(115200);
+    Serial.println("Starting Up");
 
-    Serial1.println("Starting Up");
 
-    //dTemp.begin();
+    //ow sensor
+    new (&ow) OneWireNg_CurrentPlatform(OW_TEMP_PIN, false);
+    DSTherm owTemp(ow);
+    owTemp.filterSupportedSlaves();
+
+
+
     sensor.begin();
 
     pinMode(13, OUTPUT);
@@ -316,7 +336,7 @@ void setup() {
 
     LMIC_startJoining();
 
-    Serial.println("Join-Vorgang gestartet...");
+    Serial.println("Joining...");
 
 
     do_send(&sendjob);
@@ -326,6 +346,5 @@ void setup() {
 
 
 void loop() {
-
     os_runloop_once();
 }
