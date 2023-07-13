@@ -12,6 +12,7 @@
 #include <lmic.h>
 #include <hal/hal.h>
 
+#define Serial Serial1
 
 MbedSPI spi(8,15,14);
 
@@ -38,7 +39,6 @@ void os_getDevKey(u1_t *buf) { memcpy_P(buf, APPKEY, 16); }
 
 
 static uint8_t payload[11];
-static uint8_t mydata[] = "Hello, world!";
 static osjob_t sendjob;
 static osjob_t retryJoinCallback;
 
