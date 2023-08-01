@@ -42,6 +42,8 @@ static uint8_t payload[11];
 static osjob_t sendjob;
 static osjob_t retryJoinCallback;
 
+uint8_t LMIC_DataBits;
+
 // send interval in seconds
 #ifdef DEBUG_MODE
 const unsigned TX_INTERVAL = 60;
@@ -82,6 +84,7 @@ datetime_t t = {
 
 
 void updateSensorValues() {
+    sensor.wakeUp();
     //dTemp.requestTemperatures();
     //owTemperature = dTemp.getTempCByIndex(0);
 
@@ -100,6 +103,7 @@ void updateSensorValues() {
     bmeTemperature = sensor.getTemperature();
     bmeHumidity = sensor.getHumidity();
     bmePressure = sensor.getPressure();
+    sensor.sleep();
 }
 
 
@@ -110,6 +114,7 @@ void do_send(osjob_t *j) {
     if (LMIC.opmode & OP_TXRXPEND) {
         Serial.println(F("OP_TXRXPEND, not sending"));
     } else {
+
 
         Serial.println("Preparing Send");
         // update values from sensors
@@ -168,8 +173,10 @@ void do_send(osjob_t *j) {
 }
 
 static void sleepFinished() {
-    do_send(&sendjob);
-    //os_setTimedCallback(&sendjob, os_getTime() + sec2osticks(1), do_send);
+
+
+    //do_send(&sendjob);
+    os_setTimedCallback(&sendjob, os_getTime() + sec2osticks(1), do_send);
 }
 
 void retryJoin(osjob_t *j) {

@@ -41,3 +41,11 @@ float EnvSensor::getPressure() {
 float EnvSensor::getHumidity() {
     return bme->readHumidity();
 }
+
+void EnvSensor::sleep() {
+    bme->setSampling(Adafruit_BME280::MODE_SLEEP);
+}
+
+void EnvSensor::wakeUp() {
+    bme->setSampling(Adafruit_BME280::MODE_NORMAL);
+}

@@ -31,6 +31,8 @@ public:
     float getTemperature();
     float getPressure();
     float getHumidity();
+    void sleep();
+    void wakeUp();
 
 
 };
