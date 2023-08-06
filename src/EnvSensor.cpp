@@ -10,6 +10,9 @@ EnvSensor::EnvSensor() {
 
     EnvSensor::bme = new Adafruit_BME280();
     i2c = new MbedI2C(I2C_SDA_PIN,I2C_SCL_PIN);
+
+    pinMode(MOISTURE_SENSOR_POWER_PIN, OUTPUT);
+    digitalWrite(MOISTURE_SENSOR_POWER_PIN, LOW);
 }
 
 bool EnvSensor::begin() {
@@ -44,8 +47,10 @@ float EnvSensor::getHumidity() {
 
 void EnvSensor::sleep() {
     bme->setSampling(Adafruit_BME280::MODE_SLEEP);
+    digitalWrite(MOISTURE_SENSOR_POWER_PIN, LOW);
 }
 
 void EnvSensor::wakeUp() {
     bme->setSampling(Adafruit_BME280::MODE_NORMAL);
+    digitalWrite(MOISTURE_SENSOR_POWER_PIN, HIGH);
 }

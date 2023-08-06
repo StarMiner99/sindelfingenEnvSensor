@@ -73,7 +73,7 @@ float bmePressure;
 float bmeHumidity;
 
 datetime_t t = {
-        .year = 0,
+        .year = 1,
         .month = 1,
         .day = 1,
         .dotw = 0,
@@ -173,10 +173,8 @@ void do_send(osjob_t *j) {
 }
 
 static void sleepFinished() {
-
-
     //do_send(&sendjob);
-    os_setTimedCallback(&sendjob, os_getTime() + sec2osticks(1), do_send);
+    os_setTimedCallback(&sendjob, os_getTime() + sec2osticks(2), do_send);
 }
 
 void retryJoin(osjob_t *j) {

@@ -16,6 +16,7 @@
 
 #define BME_ADDR 0x76
 #define MOISTURE_SENSOR_PIN A0
+#define MOISTURE_SENSOR_POWER_PIN A1
 #define OW_TEMP_PIN 5
 
 
