@@ -23,7 +23,26 @@
 
 // the following values should not be published
 // and therefore placed in a seperate file that is not version Controlled
+
+#define DEVICE_ID 1
+
+#if DEVICE_ID == 1
+#include "ConfigPrivate1.h"
+#elif DEVICE_ID == 2
+#include "ConfigPrivate2.h"
+#elif DEVICE_ID == 3
+#include "ConfigPrivate3.h"
+#elif DEVICE_ID == 4
+#include "ConfigPrivate4.h"
+#elif DEVICE_ID == 5
+#include "ConfigPrivate5.h"
+#elif DEVICE_ID == 6
+#include "ConfigPrivate6.h"
+#else
 #include "ConfigPrivate.h"
+#endif
+
+
 
 // This EUI must be in little-endian format, so least-significant-byte
 // first. When copying an EUI from ttnctl output, this means to reverse
