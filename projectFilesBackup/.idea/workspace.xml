@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="CMakePresetLoader">{
+  &quot;useNewFormat&quot;: true
+}</component>
+  <component name="CMakeReloadState">
+    <option name="reloaded" value="true" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="Project" targetName="Production" />
+      <config projectName="Project" targetName="Debug" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="pico" ENABLED="true" CONFIG_NAME="pico" TOOLCHAIN_NAME="Default" NO_GENERATOR="true" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="aee9fa0a-05fc-41b3-8389-21fe6b58d01f" name="Changes" comment="Set Serial to Serial 1 to make it work (does not work with Serial (does not wake up))">
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:pico" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="1.4" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2Recps4NYT9tzco8AsNMa4MgtZ1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "/media/thijs/data/backupaugust23/Documents/mik/sindelfingenEnvSensor",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlatformIO Debug" type="platformio" factoryName="PlatformIO Debug" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="sindelfingenEnvSensor" TARGET_NAME="Debug" CONFIG_NAME="pico" RUN_TARGET_PROJECT_NAME="sindelfingenEnvSensor" RUN_TARGET_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlatformIO Upload" type="platformio" factoryName="PlatformIO Upload" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="sindelfingenEnvSensor" TARGET_NAME="Production" CONFIG_NAME="pico" RUN_TARGET_PROJECT_NAME="sindelfingenEnvSensor" RUN_TARGET_NAME="Production">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="aee9fa0a-05fc-41b3-8389-21fe6b58d01f" name="Changes" comment="" />
+      <created>1687614172722</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1687614172722</updated>
+      <workItem from="1687614173747" duration="12468000" />
+      <workItem from="1687778538804" duration="532000" />
+      <workItem from="1687874279174" duration="9369000" />
+      <workItem from="1687945779436" duration="8812000" />
+      <workItem from="1688050635636" duration="7573000" />
+      <workItem from="1688821729196" duration="163000" />
+      <workItem from="1688988824590" duration="870000" />
+      <workItem from="1688990549976" duration="163000" />
+      <workItem from="1688991150369" duration="4569000" />
+      <workItem from="1689000649722" duration="314000" />
+      <workItem from="1689262411552" duration="502000" />
+      <workItem from="1692692816091" duration="15000" />
+    </task>
+    <task id="LOCAL-00001" summary="created sensor read class">
+      <option name="closed" value="true" />
+      <created>1687615182895</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1687615182895</updated>
+    </task>
+    <task id="LOCAL-00002" summary="created config.h to store vlaues">
+      <option name="closed" value="true" />
+      <created>1687615410359</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1687615410359</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fixed OneWire temperature sensor&#10;(not working in seperate class">
+      <option name="closed" value="true" />
+      <created>1687616856400</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1687616856400</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added lorawan functionality">
+      <option name="closed" value="true" />
+      <created>1687619341164</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1687619341164</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added private config file">
+      <option name="closed" value="true" />
+      <created>1687619593970</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1687619593970</updated>
+    </task>
+    <task id="LOCAL-00006" summary="do send at start">
+      <option name="closed" value="true" />
+      <created>1687626069295</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1687626069295</updated>
+    </task>
+    <task id="LOCAL-00007" summary="increased txpower for testing and fixed data inputs">
+      <option name="closed" value="true" />
+      <created>1687880461231</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1687880461232</updated>
+    </task>
+    <task id="LOCAL-00008" summary="added payload formatter">
+      <option name="closed" value="true" />
+      <created>1687882691420</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1687882691420</updated>
+    </task>
+    <task id="LOCAL-00009" summary="set txpower to legal limit (eu)">
+      <option name="closed" value="true" />
+      <created>1687897303851</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1687897303851</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added data formatter for daten community (data collection site)">
+      <option name="closed" value="true" />
+      <created>1687901417442</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1687901417442</updated>
+    </task>
+    <task id="LOCAL-00011" summary="added group to data converter and removed unwanted data field">
+      <option name="closed" value="true" />
+      <created>1687946704790</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1687946704790</updated>
+    </task>
+    <task id="LOCAL-00012" summary="renamed payload formatter">
+      <option name="closed" value="true" />
+      <created>1687946834660</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1687946834660</updated>
+    </task>
+    <task id="LOCAL-00013" summary="added toggleable debug mode">
+      <option name="closed" value="true" />
+      <created>1687947249794</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1687947249794</updated>
+    </task>
+    <task id="LOCAL-00014" summary="tested power saving and added send intervals">
+      <option name="closed" value="true" />
+      <created>1687952534985</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1687952534985</updated>
+    </task>
+    <task id="LOCAL-00015" summary="testing with custom platform">
+      <option name="closed" value="true" />
+      <created>1688054284245</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1688054284245</updated>
+    </task>
+    <task id="LOCAL-00016" summary="sleep testing">
+      <option name="closed" value="true" />
+      <created>1688072575826</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1688072575826</updated>
+    </task>
+    <task id="LOCAL-00017" summary="removed submodules">
+      <option name="closed" value="true" />
+      <created>1688988955008</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1688988955008</updated>
+    </task>
+    <task id="LOCAL-00018" summary="using alternative OW Temperature library">
+      <option name="closed" value="true" />
+      <created>1688993488696</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1688993488696</updated>
+    </task>
+    <task id="LOCAL-00019" summary="changed moisture pin and enabled debug mode">
+      <option name="closed" value="true" />
+      <created>1688994286767</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1688994286767</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Set Serial to Serial 1 to make it work (does not work with Serial (does not wake up))">
+      <option name="closed" value="true" />
+      <created>1689262524403</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1689262524403</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VCPKGProject">
+    <isAutomaticEditVcpkgJson value="false" />
+    <isAutomaticCheckingOnLaunch value="false" />
+    <isAutomaticFoundErrors value="true" />
+    <isAutomaticFoundErrors value="true" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="created sensor read class" />
+    <MESSAGE value="created config.h to store vlaues" />
+    <MESSAGE value="fixed OneWire temperature sensor&#10;(not working in seperate class" />
+    <MESSAGE value="added lorawan functionality" />
+    <MESSAGE value="added private config file" />
+    <MESSAGE value="do send at start" />
+    <MESSAGE value="increased txpower for testing and fixed data inputs" />
+    <MESSAGE value="added payload formatter" />
+    <MESSAGE value="set txpower to legal limit (eu)" />
+    <MESSAGE value="added data formatter for daten community (data collection site)" />
+    <MESSAGE value="added group to data converter and removed unwanted data field" />
+    <MESSAGE value="renamed payload formatter" />
+    <MESSAGE value="added toggleable debug mode" />
+    <MESSAGE value="tested power saving and added send intervals" />
+    <MESSAGE value="testing with custom platform" />
+    <MESSAGE value="sleep testing" />
+    <MESSAGE value="removed submodules" />
+    <MESSAGE value="using alternative OW Temperature library" />
+    <MESSAGE value="changed moisture pin and enabled debug mode" />
+    <MESSAGE value="Set Serial to Serial 1 to make it work (does not work with Serial (does not wake up))" />
+    <option name="LAST_COMMIT_MESSAGE" value="Set Serial to Serial 1 to make it work (does not work with Serial (does not wake up))" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/.pio/libdeps/pico/OneWire@src-c85eb7073807f4078d6188dc37976b94/util/OneWire_direct_gpio.h</url>
+          <line>372</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
