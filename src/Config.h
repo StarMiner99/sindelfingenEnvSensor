@@ -7,7 +7,7 @@
 
 
 // define if debuging (uses more energy due to led)
-#define DEBUG_MODE
+//#define DEBUG_MODE
 
 #define SEND_OFFSET 3600 // time in seconds how often to send data (in debug mode this is 60)
 

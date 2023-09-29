@@ -14,8 +14,6 @@
 
 #define Serial Serial1
 
-MbedSPI spi(8,15,14);
-
 EnvSensor sensor;
 
 Placeholder<OneWireNg_CurrentPlatform> ow;
@@ -327,7 +325,6 @@ void setup() {
 
 
     //LMIC init
-    hal_set_spi(&spi);
     os_init();
 
 
